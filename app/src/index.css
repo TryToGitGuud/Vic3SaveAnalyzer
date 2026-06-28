@@ -1,0 +1,38 @@
+:root {
+  font: 16px/1.45 system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #1f2a24;
+  background: #f4f1ea;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: #e6e1d6;
+  color: #1f2a24;
+  font-family: ui-monospace, Consolas, monospace;
+}
