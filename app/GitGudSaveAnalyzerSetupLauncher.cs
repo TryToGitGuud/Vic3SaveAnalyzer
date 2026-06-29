@@ -25,7 +25,12 @@ internal static class GitGudSaveAnalyzerSetupLauncher
                 WorkingDirectory = appRoot,
                 UseShellExecute = true,
             };
-            Process.Start(info);
+            Process process = Process.Start(info);
+            if (process != null)
+            {
+                process.WaitForExit();
+                return process.ExitCode;
+            }
             return 0;
         }
         catch (Exception ex)

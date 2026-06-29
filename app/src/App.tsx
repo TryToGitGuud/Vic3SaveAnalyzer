@@ -2050,7 +2050,7 @@ function parseTechnologyProgress(block: string): TechnologyProgress[] {
   if (!progressBlock) return []
 
   const progress: TechnologyProgress[] = []
-  const techRegex = /technology="([^"]+)"/g
+  const techRegex = /technology=(?:"([^"]+)"|([^\s{}"]+))/g
   while (techRegex.lastIndex < progressBlock.length) {
     const match = techRegex.exec(progressBlock)
     if (!match) break
@@ -2060,7 +2060,7 @@ function parseTechnologyProgress(block: string): TechnologyProgress[] {
       itemStart >= 0 && itemClose > itemStart
         ? progressBlock.slice(itemStart + 1, itemClose)
         : progressBlock.slice(match.index, Math.min(progressBlock.length, match.index + 260))
-    const key = match[1]
+    const key = match[1] ?? match[2]
     progress.push({
       key,
       label: buildTechnologyItem(key).label,
@@ -2076,7 +2076,13 @@ function parseTechnologyProgress(block: string): TechnologyProgress[] {
 function getQuotedList(block: string, key: string): string[] {
   const listBlock = getKeyBlock(block, key)
   if (!listBlock) return []
-  return [...listBlock.matchAll(/"([^"]+)"/g)].map((match) => match[1])
+  const quoted = [...listBlock.matchAll(/"([^"]+)"/g)].map((match) => match[1])
+  if (quoted.length > 0) return quoted
+  return listBlock
+    .trim()
+    .split(/\s+/)
+    .map((item) => item.trim())
+    .filter((item) => item.length > 0 && item !== '{' && item !== '}')
 }
 
 function emptyCountryTechnologies(): CountryTechnologies {
